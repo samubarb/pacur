@@ -1,8 +1,8 @@
-FROM docker.io/archlinux
+FROM docker.io/archlinux:base-devel
 MAINTAINER Pacur <contact@pacur.org>
 
-RUN pacman -Syu --noconfirm
-RUN pacman -S --noconfirm base-devel go git mercurial wget rsync tar zip sudo
+RUN pacman -Sy --noconfirm --needed go cmake npm
+# RUN pacman -S --noconfirm base-devel go git mercurial wget rsync tar zip sudo
 RUN ln -s -f /usr/bin/pinentry-curses /usr/bin/pinentry
 
 ENV GOPATH /go

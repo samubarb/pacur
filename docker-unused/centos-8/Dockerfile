@@ -1,9 +1,10 @@
-FROM docker.io/ubuntu:bionic
+FROM docker.io/centos:8
 MAINTAINER Pacur <contact@pacur.org>
 
-RUN apt-get --assume-yes update
-RUN apt-get --assume-yes upgrade
-RUN apt-get --assume-yes install build-essential reprepro rsync wget zip git mercurial
+RUN yum -y install epel-release
+RUN yum -y upgrade
+RUN yum -y groupinstall 'Development Tools'
+RUN yum -y install tar expect rpm-build rpm-sign openssl createrepo rsync make automake gcc wget zip git mercurial
 
 RUN wget https://go.dev/dl/go1.18.linux-amd64.tar.gz
 RUN echo "e85278e98f57cdb150fe8409e6e5df5343ecb13cebf03a5d5ff12bd55a80264f go1.18.linux-amd64.tar.gz" | sha256sum -c -
@@ -17,4 +18,4 @@ ENV GO111MODULE on
 RUN go install github.com/pacur/pacur@latest
 
 ENTRYPOINT ["pacur"]
-CMD ["build", "ubuntu-bionic"]
+CMD ["build", "centos-8"]
